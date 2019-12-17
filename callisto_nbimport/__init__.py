@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def _jupyter_server_extension_paths():
     return [{
-        "module": "callisto_nbimporter"
+        "module": "callisto_nbimport"
     }]
 
 

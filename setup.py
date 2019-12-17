@@ -12,7 +12,7 @@ install_requires = [
 ]
 
 setuptools.setup(
-    name="callisto-nbimporter",
+    name="callisto-nbimport",
     version="0.0.1",
     author="cccs",
     author_email="",
@@ -20,7 +20,7 @@ setuptools.setup(
     install_requires=install_requires,
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/cccs-is/callisto-nbimporter",
+    url="https://github.com/cccs-is/callisto-nbimport",
     packages=setuptools.find_packages(),
     classifiers=(
         "Programming Language :: Python :: 3",
@@ -30,7 +30,7 @@ setuptools.setup(
     include_package_data = True,
     data_files = [
         ("etc/jupyter/jupyter_notebook_config.d", [
-          "jupyter-config/jupyter_notebook_config.d/callisto-nbimport.json"
+          "jupyter-config/jupyter_notebook_config.d/callisto_nbimport.json"
         ])
     ]
 
