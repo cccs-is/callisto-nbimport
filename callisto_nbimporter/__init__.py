@@ -1,22 +1,31 @@
 from notebook.utils import url_path_join
 from notebook.base.handlers import IPythonHandler
-from tornado import web
+#from tornado import web
 from .helper import import_notebook
+import logging
 
+logger = logging.getLogger(__name__)
 
 def _jupyter_server_extension_paths():
     return [{
-        "module": "oh_notebook_importer"
+        "module": "callisto_nbimporter"
     }]
 
 
 class HelloWorldHandler(IPythonHandler):
-    @web.authenticated
     def get(self):
         notebook_location = self.get_argument('notebook_location')
         notebook_name = self.get_argument('notebook_name')
+        access_token = self.get_argument('access_token')
         target = self.get_argument('target', default=None)
-        notebook_name = import_notebook(notebook_location, notebook_name)
+        #logger.info('>>> calling import_notebook() @web.authenticated removed (replace http with https)')
+        oauth2_proxy_cookie = self.get_cookie('_oauth2_proxy')
+        cookies = None
+        if oauth2_proxy_cookie is not None :
+            cookies = {'_oauth2_proxy': oauth2_proxy_cookie} 
+        # logger.info('cookies we well use:')
+        # logger.info(cookies)
+        notebook_name = import_notebook(notebook_location, notebook_name, access_token, cookies)
         # self.finish('Imported notebook {}'.format(
         #    notebook_name))
         if target == 'voila':
@@ -29,7 +38,7 @@ class HelloWorldHandler(IPythonHandler):
                         base=self.base_url,
                         nbname=notebook_name
             )
-        print(url)
+        # logger.info('HelloWorldHandler() -> url:' +  url)
         self.redirect(url)
         # self.redirect(self.base_url)
 
