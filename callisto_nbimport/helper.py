@@ -14,7 +14,7 @@ def import_notebook(notebook_url, notebook_name, access_token, cookies = None):
                'X-Access-Token': access_token}
     try:
         response = requests.get(notebook_url, headers=headers, cookies=cookies)
-        if response.status_code != 200:
+        if response.status_code == 200:
             notebook_content = response.content
             if os.path.isfile(notebook_name):
                 notebook_name = notebook_name.replace('.ipynb',
