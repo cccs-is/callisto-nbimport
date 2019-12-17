@@ -5,6 +5,7 @@ with open("README.md", "r") as fh:
 
 
 install_requires = [
+    'notebook',
     'requests>=2.9.1',
     'markdown>=2.6.0',
     'arrow>=0.12.1'
@@ -13,7 +14,7 @@ install_requires = [
 setuptools.setup(
     name="callisto-nbimporter",
     version="0.0.1",
-    author="",
+    author="cccs",
     author_email="",
     description="Import a notebook from Callisto",
     install_requires=install_requires,
@@ -26,4 +27,11 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ),
+    include_package_data = True,
+    data_files = [
+        ("etc/jupyter/jupyter_notebook_config.d", [
+          "jupyter-config/jupyter_notebook_config.d/callisto-nbimport.json"
+        ])
+    ]
+
 )
