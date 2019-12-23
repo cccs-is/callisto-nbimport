@@ -4,6 +4,7 @@ import logging
 from tornado import escape
 from notebook.utils import url_path_join
 from notebook.base.handlers import IPythonHandler
+from .oauth_utils import verify_and_decode, AUTHORIZATION_TYPE
 
 logger = logging.getLogger(__name__)
 
@@ -21,8 +22,19 @@ class NotebookImportHandler(IPythonHandler):
         pass
 
     def post(self):
-        # TODO Add token validation
-        # access_token = self.request.headers.get('Authorization')
+        # Token verification:
+        access_token = self.request.headers.get('Authorization')
+        if not access_token:
+            self.set_status(401)
+            return
+        if access_token.startswith(AUTHORIZATION_TYPE):
+            access_token = access_token[len(AUTHORIZATION_TYPE):]
+
+        decoded = verify_and_decode(access_token)
+        if not decoded:
+            self.set_status(401)
+            return
+
         try:
             data = escape.json_decode(self.request.body)
             notebook_name = data['notebook_name']
