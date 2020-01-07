@@ -10,3 +10,4 @@ global-exclude *.sh
 # explicit includes
 include README.md
 include LICENSE
+recursive-include jupyter-config *.json
