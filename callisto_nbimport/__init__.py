@@ -23,17 +23,18 @@ class NotebookImportHandler(IPythonHandler):
 
     def post(self):
         # Token verification:
-        access_token = self.request.headers.get('Authorization')
-        if not access_token:
-            self.set_status(401)
-            return
-        if access_token.startswith(AUTHORIZATION_TYPE):
-            access_token = access_token[len(AUTHORIZATION_TYPE):]
+        # TODO re-enable - temporarily disabled for testing
+        # access_token = self.request.headers.get('Authorization')
+        # if not access_token:
+        #    self.set_status(401)
+        #    return
+        # if access_token.startswith(AUTHORIZATION_TYPE):
+        #    access_token = access_token[len(AUTHORIZATION_TYPE):]
 
-        decoded = verify_and_decode(access_token)
-        if not decoded:
-            self.set_status(401)
-            return
+        # decoded = verify_and_decode(access_token)
+        # if not decoded:
+        #    self.set_status(401)
+        #    return
 
         try:
             data = escape.json_decode(self.request.body)
