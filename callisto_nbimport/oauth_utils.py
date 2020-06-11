@@ -32,11 +32,7 @@ def verify_and_decode(user_token):
     cert_obj = load_pem_x509_certificate(cert_str.encode('utf-8'), default_backend())
     public_key = cert_obj.public_key()
 
-    # This is not correct and should be fixed in the login sequence.
-    # The proper value should be == TENANT
-    tenant_id = 'https://graph.windows.net'
-    # Proper way once login proxy is fixed:
-    # tenant_id = os.getenv('TENANT', '')
+    tenant_id = os.getenv('AAD_TENANT_ID', '')
 
     # Ignore expiration date for now until we figure out how to either get refresh tokens
     # or make environment update them for us:
